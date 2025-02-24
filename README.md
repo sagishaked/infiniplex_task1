@@ -6,7 +6,7 @@
 ## Overview
 This repository contains a Flask-based web application that allows users to upload CSV files containing patient data. The application processes the data, keeps track of the latest records, and provides sorting functionalities.
 
-## IT Person Setup
+##  Setup
 Follow these exact instructions to set up and run the application on an **Ubuntu** machine.
 
 ### 1. Prerequisites
