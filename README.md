@@ -1,7 +1,7 @@
 # infiniplex_task1
 
 
-# Flask Web Application Setup Guide
+# Application Setup Guide
 
 ## Overview
 This repository contains a Flask-based web application that allows users to upload CSV files containing patient data. The application processes the data, keeps track of the latest records, and provides sorting functionalities.
