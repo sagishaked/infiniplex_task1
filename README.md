@@ -68,6 +68,4 @@ Replace `<server_ip>` with the actual IP address obtained in the previous step.
 ### 6. Stopping the Application
 To stop the application, press `Ctrl + C` in the terminal where it is running.
 
----
-This completes the setup. The application should now be accessible from any computer on the network using the correct server IP and port 5000. 🚀
 
