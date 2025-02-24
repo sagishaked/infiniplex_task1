@@ -5,11 +5,8 @@ import datetime
 import webbrowser
 
 app = Flask(__name__)
-app.secret_key = "supersecretkey"  # Needed for flash messages
-UPLOAD_FOLDER = "uploads"
-os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
-# Store uploaded data
+# store uploaded data
 data_store = pd.DataFrame(columns=["Date/Time", "Patient ID", "Outcome"])
 
 @app.route("/", methods=["GET", "POST"])
@@ -28,20 +25,20 @@ def index():
                 if set(df.columns) != {"Patient ID", "Outcome"}:
                     raise ValueError("Invalid CSV format. Required columns: Patient ID, Outcome")
 
-                # Add timestamp to track the latest entry
+                # add timestamp to track the latest entry
                 df["Date/Time"] = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
-                # Append new data
+                # append new data
                 data_store = pd.concat([data_store, df], ignore_index=True)
 
-                # Keep only the last entry for each Patient ID (most recent)
+                # keep only the last entry for each Patient ID (most recent)
                 data_store = data_store.sort_values("Date/Time").groupby("Patient ID", as_index=False).last()
 
             except Exception as e:
                 flash(f"Error: {str(e)}", "error")
                 return redirect("/")
 
-    # Get sorting preferences
+    # get sorting preferences
     primary_sort = request.args.get("sort", "Date/Time")
     order = request.args.get("order", "desc")
     ascending = order == "asc"
