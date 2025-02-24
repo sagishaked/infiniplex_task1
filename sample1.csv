@@ -1,0 +1,17 @@
+Patient ID,Outcome
+P001,Recovered
+P002,Under Treatment
+P003,Discharged
+P001,Under Treatment
+P004,In Progress
+P003,Under Treatment
+P002,Recovered
+P004,Recovered
+P005,Recovered
+P006,Under Treatment
+P007,Discharged
+P005,Under Treatment
+P008,In Progress
+P007,Under Treatment
+P006,Recovered
+P008,Recovered

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Revision Keeper</title>
+</head>
+<body>
+    <h1>Revision Keeper</h1>
+
+    <form action="/" method="post" enctype="multipart/form-data">
+        <input type="file" name="file" required>
+        <button type="submit">Upload</button>
+    </form>
+
+    {% for message in get_flashed_messages() %}
+        <p>{{ message }}</p>
+    {% endfor %}
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th><a href="?sort=Date/Time&order={% if current_sort == 'Date/Time' and current_order == 'asc' %}desc{% else %}asc{% endif %}">Date/Time</a></th>
+                <th><a href="?sort=Patient ID&order={% if current_sort == 'Patient ID' and current_order == 'asc' %}desc{% else %}asc{% endif %}">Patient ID</a></th>
+                <th><a href="?sort=Outcome&order={% if current_sort == 'Outcome' and current_order == 'asc' %}desc{% else %}asc{% endif %}">Outcome</a></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for file in files %}
+            <tr>
+                <td>{{ file["Date/Time"] }}</td>
+                <td>{{ file["Patient ID"] }}</td>
+                <td>{{ file["Outcome"] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
