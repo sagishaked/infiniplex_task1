@@ -27,10 +27,10 @@ sudo apt install python3 python3-pip -y
 ### 2. Clone the Repository
 Fetch the latest code from the Git repository:
 ```bash
-git clone <repository_url>
+git clone https://github.com/sagishaked/infiniplex_task1
 cd <repository_folder>
 ```
-Replace `<repository_url>` with the actual Git repository URL and `<repository_folder>` with the directory name of the cloned repository.
+
 
 ### 3. Install Python Dependencies
 Run the following command inside the project folder:
