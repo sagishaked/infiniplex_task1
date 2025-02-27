@@ -31,8 +31,13 @@ def index():
                 # append new data
                 data_store = pd.concat([data_store, df], ignore_index=True)
 
-                # keep only the last entry for each Patient ID (most recent)
-                data_store = data_store.sort_values("Date/Time").groupby("Patient ID", as_index=False).last()
+                # Sort by Date/Time (latest first)
+                data_store = data_store.sort_values("Date/Time", ascending=False)
+
+                # Mark the most recent record for each Patient ID
+                data_store["is_latest"] = False  # Default to False for all
+                latest_entries = data_store.groupby("Patient ID").head(1)  # Get latest for each patient
+                data_store.loc[latest_entries.index, "is_latest"] = True  # Set latest as True                                                                          as_index=False).first()
 
             except Exception as e:
                 flash(f"Error: {str(e)}", "error")

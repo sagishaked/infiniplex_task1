@@ -2,6 +2,32 @@
 <html>
 <head>
     <title>Revision Keeper</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+            cursor: pointer;
+        }
+        tr.outdated {
+            text-decoration: line-through;
+            color: gray;
+        }
+        tr.current {
+            /* Normal styling for current records */
+            font-weight: normal;
+        }
+        .sort-indicator {
+            margin-left: 5px;
+        }
+    </style>
 </head>
 <body>
     <h1>Revision Keeper</h1>
@@ -15,17 +41,17 @@
         <p>{{ message }}</p>
     {% endfor %}
 
-    <table border="1">
+    <table>
         <thead>
             <tr>
-                <th><a href="?sort=Date/Time&order={% if current_sort == 'Date/Time' and current_order == 'asc' %}desc{% else %}asc{% endif %}">Date/Time</a></th>
-                <th><a href="?sort=Patient ID&order={% if current_sort == 'Patient ID' and current_order == 'asc' %}desc{% else %}asc{% endif %}">Patient ID</a></th>
-                <th><a href="?sort=Outcome&order={% if current_sort == 'Outcome' and current_order == 'asc' %}desc{% else %}asc{% endif %}">Outcome</a></th>
+                <th><a href="?sort=Date/Time&order={% if current_sort == 'Date/Time' and current_order == 'asc' %}desc{% else %}asc{% endif %}">Date/Time {% if current_sort == 'Date/Time' %}<span class="sort-indicator">{% if current_order == 'asc' %}▲{% else %}▼{% endif %}</span>{% endif %}</a></th>
+                <th><a href="?sort=Patient ID&order={% if current_sort == 'Patient ID' and current_order == 'asc' %}desc{% else %}asc{% endif %}">Patient ID {% if current_sort == 'Patient ID' %}<span class="sort-indicator">{% if current_order == 'asc' %}▲{% else %}▼{% endif %}</span>{% endif %}</a></th>
+                <th><a href="?sort=Outcome&order={% if current_sort == 'Outcome' and current_order == 'asc' %}desc{% else %}asc{% endif %}">Outcome {% if current_sort == 'Outcome' %}<span class="sort-indicator">{% if current_order == 'asc' %}▲{% else %}▼{% endif %}</span>{% endif %}</a></th>
             </tr>
         </thead>
         <tbody>
             {% for file in files %}
-            <tr>
+            <tr class="{% if file['is_latest'] %}current{% else %}outdated{% endif %}">
                 <td>{{ file["Date/Time"] }}</td>
                 <td>{{ file["Patient ID"] }}</td>
                 <td>{{ file["Outcome"] }}</td>
