@@ -19,11 +19,18 @@ def index():
             if not file:
                 flash("No file uploaded", "error")
                 return redirect("/")
+            # Check if the file has a .csv extension
+            if not file.filename.endswith(".csv"):
+                flash("Invalid file type. Please upload a CSV file.", "error")
+                return redirect("/")
 
             try:
                 df = pd.read_csv(file)
+
                 if set(df.columns) != {"Patient ID", "Outcome"}:
                     raise ValueError("Invalid CSV format. Required columns: Patient ID, Outcome")
+
+                df["Patient ID"] = df["Patient ID"].astype(str)
 
                 # add timestamp to track the latest entry
                 df["Date/Time"] = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -39,9 +46,13 @@ def index():
                 latest_entries = data_store.groupby("Patient ID").head(1)  # Get latest for each patient
                 data_store.loc[latest_entries.index, "is_latest"] = True  # Set latest as True                                                                          as_index=False).first()
 
+
             except Exception as e:
-                flash(f"Error: {str(e)}", "error")
-                return redirect("/")
+
+                flash(f"Error: The CSV is malformed. {str(e)}", "error")
+
+                return render_template("index.html", files=data_store.to_dict("records"), current_sort="Date/Time",
+                                       current_order="desc")
 
     # get sorting preferences
     primary_sort = request.args.get("sort", "Date/Time")
